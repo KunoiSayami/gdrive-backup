@@ -57,7 +57,7 @@ def del_file(file_id: str):
 
 def main():
 	config = ConfigParser()
-	config.read('backup.ini')
+	config.read('config.ini')
 	if config.has_option('sql', 'fileid'):
 		fileid_ = config['sql']['fileid']
 	else:
@@ -70,7 +70,7 @@ def main():
 		del_file(fileid_)
 	config['sql']['fileid'] = current_fileid
 	Log.info('Success backup {}', current_fileid)
-	with open('backup.ini', 'w') as fout:
+	with open('config.ini', 'w') as fout:
 		config.write(fout)
 
 if __name__ == '__main__':
