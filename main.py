@@ -26,7 +26,7 @@ class timestamp:
 	timestamp_ = ''
 	@staticmethod
 	def gen():
-		timestamp.timestamp_ = time.strftime('%Y-%m-%d %H:%M:%S')
+		timestamp.timestamp_ = time.strftime('%Y%m%d%H%M%S')
 		return timestamp.get()
 	@staticmethod
 	def get():
@@ -38,7 +38,7 @@ def gensql(db_names: tuple or list, db_passwd: str, *, db_user: str = 'root'):
 	return sub.communicate()[0].decode('utf8')
 
 def bkup(db_names: tuple or list, db_passwd: str, *, db_user: str = 'root'):
-	with open('bakupsql{}.sql'.format(timestamp.gen()), 'w') as fout:
+	with open('backupsql{}.sql'.format(timestamp.gen()), 'w') as fout:
 		fout.write(gensql(db_names, db_passwd, db_user=db_user))
 	with open('backupsql{}.sql'.format(timestamp.get()), 'rb') as fin, open('backupsql{}.sql.gz'.format(timestamp.get()), 'wb') as fout:
 		shutil.copyfileobj(fin, fout)
