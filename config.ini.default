@@ -1,0 +1,14 @@
+[sql]
+databases = ('db1', 'db2')
+passwd = 
+
+[encrypt]
+key = 
+associated_data = sql backup
+
+[log]
+log_level = INFO
+log_file = log.log
+pre_print = None
+emerg_print =
+emerg_print_to =
