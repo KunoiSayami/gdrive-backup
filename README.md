@@ -12,7 +12,9 @@ The following libraries are required:
 ## Feature
 
 * Encrypt with AES_GCM
+* Use gzip to compress large database export files
 * Once upload, the previous file will be deleted automatically
+* Auto upload backup file to google drive
 
 ## WARNING
 

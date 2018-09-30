@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 # main.py
 # Copyright (C) 2018 Too-Naive
@@ -76,6 +77,7 @@ def main():
 	#Log.info('Backup process started')
 	current_fileid = bkup(eval(config['sql']['databases']), config['sql']['passwd'])
 	os.remove('backupsql{}.sql'.format(timestamp.get()))
+	os.remove('backupsql{}.sql.aes'.format(timestamp.get()))
 	#print(repr(current_fileid))
 	if fileid_ != '':
 		try: del_file(fileid_)
