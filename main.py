@@ -34,21 +34,21 @@ class timestamp:
 		return timestamp.timestamp_
 
 def gensql(db_names: tuple or list, db_passwd: str, *, db_user: str = 'root'):
-	sub = subprocess.Popen(['mysqldump', '-u', db_user,'-p{}'.format(db_passwd), '--databases'] + [ db_name for db_name in db_names], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-	#sub.wait()
-	return sub.communicate()[0].decode('utf8')
+	with open('backupsql{}.sql'.format(timestamp.gen()), 'w') as fout:
+		sub = subprocess.Popen(['mysqldump', '-u', db_user,'-p{}'.format(db_passwd), '--databases'] + [ db_name for db_name in db_names], stdout=fout, stderr=subprocess.DEVNULL)
+		sub.wait()
+	#return sub.communicate()[0].decode('utf8')
 
 def bkup(db_names: tuple or list, db_passwd: str, *, db_user: str = 'root'):
-	with open('backupsql{}.sql'.format(timestamp.gen()), 'w') as fout:
-		fout.write(gensql(db_names, db_passwd, db_user=db_user))
+	#with open('backupsql{}.sql'.format(timestamp.gen()), 'w') as fout:
+	#	fout.write(gensql(db_names, db_passwd, db_user=db_user))
+	gensql(db_names, db_passwd, db_user=db_user)
 	encrypt_sql('backupsql{}'.format(timestamp.get()))
 	sub = subprocess.Popen(['gdrive', 'upload', 'backupsql{}.sql.aes'.format(timestamp.get())], stdout=subprocess.PIPE)
-	#sub.wait()
 	return sub.communicate()[0].decode('utf8').split()[3]
 
 def del_file(file_id: str):
 	sub = subprocess.Popen(['gdrive', 'delete', file_id], stdout=subprocess.PIPE)
-	#sub.wait()
 	r = sub.communicate()[0].decode('utf8')
 	return 'Deleted' in r
 
